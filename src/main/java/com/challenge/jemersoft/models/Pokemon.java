@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pokemon {
-    private Long id;
+//    private Long id;
     private String foto;
     private String type;
     private String weight;
@@ -12,20 +12,20 @@ public class Pokemon {
 
     public Pokemon(){}
     public Pokemon(Long id, String foto, String type, String weight, List ability) {
-        this.id = id;
+//        this.id = id;
         this.foto = foto;
         this.type = type;
         this.weight = weight;
         this.ability = ability;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public String getFoto() {
         return foto;

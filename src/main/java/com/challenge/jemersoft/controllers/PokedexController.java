@@ -4,10 +4,7 @@ package com.challenge.jemersoft.controllers;
 import com.challenge.jemersoft.services.PokemonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +28,20 @@ public class PokedexController {
             else
                 return new ResponseEntity<> ("Ocurrio un error", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<> ("Ocurrio un error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/pokemon/{name}")
+    public ResponseEntity<Object> pokemonDetails(@PathVariable String name){
+        try{
+            Object pokemon = this.pokemonService.getPokemonWhitDetails(name);
+            if (pokemon != null)
+                return new ResponseEntity<>(pokemon, HttpStatus.OK);
+            else
+                return new ResponseEntity<> ("Ocurrio un error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }  catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<> ("Ocurrio un error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
