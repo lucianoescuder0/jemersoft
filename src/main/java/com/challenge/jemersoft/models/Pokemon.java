@@ -7,12 +7,12 @@ public class Pokemon {
     //    private Long id;
     private String foto;
     private String tipo;
-    private String peso;
+    private Float peso;
     List habilidades = new ArrayList<String>();
 
     public Pokemon() {}
 
-    public Pokemon(Long id, String foto, String tipo, String peso, List habilidades) {
+    public Pokemon(/*Long id,*/ String foto, String tipo, Float peso, List habilidades) {
 //        this.id = id;
         this.foto = foto;
         this.tipo = tipo;
@@ -44,11 +44,11 @@ public class Pokemon {
         this.tipo = tipo;
     }
 
-    public String getPeso() {
+    public Float getPeso() {
         return peso;
     }
 
-    public void setPeso(String peso) {
+    public void setPeso(Float peso) {
         this.peso = peso;
     }
 

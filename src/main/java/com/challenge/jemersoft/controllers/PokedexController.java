@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/pokedex")
+@RequestMapping("/v1/pokedex")
 public class PokedexController {
     private final PokemonService pokemonService;
 

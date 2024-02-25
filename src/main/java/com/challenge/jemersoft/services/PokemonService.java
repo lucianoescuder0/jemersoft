@@ -101,7 +101,7 @@ public class PokemonService {
             List abilities = this.getAbilities((List) res.get("abilities"));
             String photo = this.getPhoto((Map) res.get("sprites"));
 //            pokemon.setId(Long.parseLong(res.get("id").toString()));
-            pokemon.setPeso(res.get("weight").toString());
+            pokemon.setPeso(Float.parseFloat(res.get("weight").toString()));
             pokemon.setFoto(photo);
             pokemon.setHabilidades(abilities);
             pokemon.setTipo(type);
@@ -128,7 +128,7 @@ public class PokemonService {
         Object result = "";
         try {
             Integer offset = offs * 10;
-            String url = baseUrl + "/pokemon/?offset=" + offset + "&limit=10";
+            String url = baseUrl + "/pokemon/?offset=" + offset + "&limit=6";
             Map res = restTemplate.getForObject(url, HashMap.class);
             if (res.isEmpty()) {
                 result = "No se encontro listado de pokemons";

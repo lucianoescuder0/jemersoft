@@ -14,8 +14,8 @@ public class PokemonDetails extends Pokemon {
         this.movimientos = movimientos;
     }
 
-    public PokemonDetails(Long id, String foto, String type, String weight, List ability, String descripcion, List movimientos) {
-        super(id, foto, type, weight, ability);
+    public PokemonDetails(/*Long id, */String foto, String tipo, Float peso, List habilidades, String descripcion, List movimientos) {
+        super(/*id,*/ foto, tipo, peso, habilidades);
         this.descripcion = descripcion;
         this.movimientos = movimientos;
     }

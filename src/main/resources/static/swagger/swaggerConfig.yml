@@ -1,0 +1,123 @@
+openapi: 3.0.3
+info:
+  title: APIs pokedex
+  description: Se encuentran 2 APIs en la cual podemos ver el listado de pokemons con información básica y que muestra un poco mas de detalles por pokemon
+  contact:
+    email: lucianoescudero98@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:8099/v1/pokedex
+tags:
+  - name: pokedex
+paths:
+  /pokemons:
+    get:
+      tags:
+        - pokedex
+      summary: Busca todos los pokemons listando de a 6, con el parametros opcional page para el paginado
+      parameters:
+        - name: page
+          in: query
+          description: El valor por defecto es 0
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listPokemons'
+        400:
+          description: En cualquier tipo de error se envia el code y un mensaje de error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: La paginación debe ser mayor que 0 (cero).
+
+  /pokemon/{name}:
+    get:
+      tags:
+        - pokedex
+      summary: Busca un pokemon es especifico por su nombre
+      parameters:
+        - name: name
+          in: path
+          description: Muestra información de un pokemon en especifico
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pokemon'
+        404:
+          description: En cualquier tipo de error se envia el code y un mensaje de error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: No se encuentra el pokemon pidgeottt.
+
+
+components:
+  schemas:
+    pokemonInfo:
+      type: object
+      properties:
+        foto:
+          type: string
+          example: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg
+        tipo:
+          type: string
+          example: grass - poison
+          description: Hay pokemons que tienen mas de un tipo, estos se separan por un guión (-)
+        peso:
+          type: number
+          example: 69
+        habilidades:
+          type: array
+          example: ["overgrow", "chlorophyll"]
+          items:
+            type: string
+    listPokemons:
+      type: array
+      items:
+        $ref: '#/components/schemas/pokemonInfo'
+    pokemon:
+      type: object
+      properties:
+        foto:
+          type: string
+          example: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/18.svg
+        tipo:
+          type: string
+          example: normal - flying
+          description: Hay pokemons que tienen mas de un tipo, estos se separan por un guión (-)
+        peso:
+          type: number
+          example: 395
+        habilidades:
+          type: array
+          example: ["keen-eye","tangled-feet","big-pecks"]
+          items:
+            type: string
+        descripcion:
+          type: string
+          example: Es de carácter simple e impetuoso
+        movimientos:
+          type: array
+          example: ["razor-wind","gust","wing-attack","whirlwind","fly","sand-attack","headbutt","tackle","take-down","double-edge","hyper-beam","toxic","agility","quick-attack","rage","mimic","double-team","reflect","bide","mirror-move","swift","sky-attack","rest","substitute","thief","snore","curse","protect","mud-slap","detect","endure","swagger","steel-wing","attract","sleep-talk","return","frustration","hidden-power","twister","rain-dance","sunny-day","uproar","heat-wave","facade","secret-power","feather-dance","air-cutter","aerial-ace","roost","natural-gift","pluck","tailwind","u-turn","air-slash","giga-impact","defog","captivate","ominou-wind","round","work-up","hurricane","confide","laser-focus"]
+          items:
+            type: string
