@@ -19,15 +19,22 @@ public class PokedexController {
     }
 
     @GetMapping("/pokemons")
-    public ResponseEntity<Object> pokemons(@RequestParam(required = false, defaultValue = "0") Integer page) {
+    public ResponseEntity<Object> pokemons(@RequestParam(required = false, defaultValue = "0") String page) {
         Map error = new HashMap<String, String>();
         error.put("error", "Ocurrio un error.");
         try {
-            if (page < 0) {
-                error.put("error", "paginación errónea.");
+            Integer pag = 0;
+            try{
+                pag = Integer.parseInt(page);
+            } catch (Exception e){
+                error.put("error", "La paginación debe ser númerica");
                 return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
             }
-            Object pokemons = this.pokemonService.getPokemons(page);
+            if (pag < 0) {
+                error.put("error", "La paginación debe ser mayor que 0 (cero).");
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+            }
+            Object pokemons = this.pokemonService.getPokemons(pag);
             if (pokemons != "")
                 return new ResponseEntity<>(pokemons, HttpStatus.OK);
             else {
