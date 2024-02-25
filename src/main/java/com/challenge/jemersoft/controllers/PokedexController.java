@@ -35,10 +35,10 @@ public class PokedexController {
                 return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
             }
             Object pokemons = this.pokemonService.getPokemons(pag);
-            if (pokemons != "")
+            if (pokemons.getClass() != String.class)
                 return new ResponseEntity<>(pokemons, HttpStatus.OK);
             else {
-                error.put("error", "Ocurrio un error al obtener los pockemons.");
+                error.put("error", pokemons);
                 return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
@@ -53,10 +53,10 @@ public class PokedexController {
         error.put("error", "Ocurrio un error.");
         try {
             Object pokemon = this.pokemonService.getPokemonWhitDetails(name);
-            if (pokemon != null)
+            if (pokemon.getClass() != String.class)
                 return new ResponseEntity<>(pokemon, HttpStatus.OK);
             else {
-                error.put("error", "No se encuentra el pokemon " + name);
+                error.put("error", pokemon);
                 return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {

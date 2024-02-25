@@ -68,9 +68,11 @@ public class PokemonService {
         try {
             photo = ((Map) (((Map) sprites.get("other")).get("dream_world"))).get("front_default").toString();
         } catch (Exception e) {
-            System.out.println(prefix + "getPhoto - ERROR - Ocurrio un error al obtener la foto de mejor calidad");
-            e.printStackTrace();
-            photo = sprites.get("front_default").toString();
+            try {
+                System.out.println(prefix + "getPhoto - ERROR - Ocurrio un error al obtener la foto de mejor calidad");
+                photo = sprites.get("front_default").toString();
+            } catch (Exception ignore) {}
+
         }
         return photo;
     }
@@ -113,46 +115,70 @@ public class PokemonService {
     }
 
     public Map getPokemonResponse(String name) {
-        String newUrl = baseUrl + "/pokemon/" + name;
-        Map resPoke = restTemplate.getForObject(newUrl, Map.class);
+        Map resPoke = new HashMap<>();
+        try {
+            String newUrl = baseUrl + "/pokemon/" + name;
+            resPoke = restTemplate.getForObject(newUrl, Map.class);
+        } catch (Exception ignore) {
+        }
         return resPoke;
     }
 
     public Object getPokemons(Integer offs) {
+        Object result = "";
         try {
             Integer offset = offs * 10;
-            String url = baseUrl + "/pokemon/?offset=" + offset.toString() + "&limit=10";
+            String url = baseUrl + "/pokemon/?offset=" + offset + "&limit=10";
             Map res = restTemplate.getForObject(url, HashMap.class);
+            if (res.isEmpty()) {
+                result = "No se encontro listado de pokemons";
+                System.out.println(prefix + "getPokemons - WARN - " + result);
+                return result;
+            }
             List pokemons = new ArrayList<Pokemon>();
             List<Map<String, Object>> resPokemons = new ArrayList<>();
             resPokemons.addAll((Collection<? extends Map<String, Object>>) res.get("results"));
+            long inicio = System.currentTimeMillis();
             resPokemons.forEach(it -> {
                 Map resPoke = this.getPokemonResponse(it.get("name").toString());
                 Pokemon pokemon = (Pokemon) this.getInfoBasePokemos(resPoke, true);
                 pokemons.add(pokemon);
             });
-            return pokemons;
+            long fin = System.currentTimeMillis();
+            System.out.println("Tiempo : " + ((fin - inicio) / 1000));
+            result = pokemons.size() > 0 ? pokemons : "No se encontraron resultados";
         } catch (Exception e) {
-            System.out.println(prefix + "getPokemons - ERROR - Ocurrio un error al obtener los pokemons");
+            result = "Ocurrio un error al obtener los pokemons";
+            System.out.println(prefix + "getPokemons - ERROR - " + result);
             e.printStackTrace();
-            return "";
         }
+        return result;
     }
 
-    public PokemonDetails getPokemonWhitDetails(String name) {
+    public Object getPokemonWhitDetails(String name) {
+        String result = "";
         try {
+            long inicio = System.currentTimeMillis();
             Map resPoke = this.getPokemonResponse(name);
+            if (resPoke.isEmpty()) {
+                result = "No se encuentra el pokemon " + name;
+                System.out.println(prefix + "getPokemonWhitDetails - WARN - " + result);
+                return result;
+            }
             PokemonDetails pokemon = (PokemonDetails) this.getInfoBasePokemos(resPoke, false);
             String description = this.getDescription(resPoke.get("id").toString());
             List moves = this.getMoves((List) resPoke.get("moves"));
             pokemon.setDescripcion(description);
             pokemon.setMovimientos(moves);
+            long fin = System.currentTimeMillis();
+            System.out.println("Tiempo : " + ((fin - inicio) / 1000));
             return pokemon;
         } catch (Exception e) {
             //log.error(...); -- Asi lo manejamos actualmente en la empresa donde estoy. mostramos el stackTrace en los logs
-            System.out.println(prefix + "getPokemonWhitDetails - ERROR - Ocurrio un error al obtener el pokemon" + name);
+            result = "Ocurrio un error al obtener el pokemon " + name;
+            System.out.println(prefix + "getPokemonWhitDetails - ERROR - " + result);
             e.printStackTrace();
-            return null;
         }
+        return result;
     }
 }
