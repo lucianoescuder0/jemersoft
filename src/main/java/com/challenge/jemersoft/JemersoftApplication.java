@@ -7,12 +7,13 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class JemersoftApplication {
-	@Bean
-	public RestTemplate getresttemplate() {
-		return new RestTemplate();
-	}
-	public static void main(String[] args) {
-		SpringApplication.run(JemersoftApplication.class, args);
-	}
+    @Bean
+    public RestTemplate getresttemplate() {
+        return new RestTemplate();
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(JemersoftApplication.class, args);
+    }
 
 }

@@ -5,28 +5,27 @@ import java.util.List;
 
 public class PokemonDetails extends Pokemon {
     private String descripcion;
-    List ListaMovimientos = new ArrayList<String>();
-
+    List movimientos = new ArrayList<String>();
 
     public PokemonDetails() {}
 
-    public PokemonDetails(String descripcion, List listaMovimientos) {
+    public PokemonDetails(String descripcion, List movimientos) {
         this.descripcion = descripcion;
-        ListaMovimientos = listaMovimientos;
+        this.movimientos = movimientos;
     }
 
-    public PokemonDetails(Long id, String foto, String type, String weight, List ability, String descripcion, List listaMovimientos) {
+    public PokemonDetails(Long id, String foto, String type, String weight, List ability, String descripcion, List movimientos) {
         super(id, foto, type, weight, ability);
         this.descripcion = descripcion;
-        ListaMovimientos = listaMovimientos;
+        this.movimientos = movimientos;
     }
 
-    public List getListaMovimientos() {
-        return ListaMovimientos;
+    public List getMovimientos() {
+        return movimientos;
     }
 
-    public void setListaMovimientos(List listaMovimientos) {
-        ListaMovimientos = listaMovimientos;
+    public void setMovimientos(List movimientos) {
+        this.movimientos = movimientos;
     }
 
     public String getDescripcion() {

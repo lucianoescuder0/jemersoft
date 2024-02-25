@@ -4,19 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pokemon {
-//    private Long id;
+    //    private Long id;
     private String foto;
-    private String type;
-    private String weight;
-    List ability = new ArrayList<String>();
+    private String tipo;
+    private String peso;
+    List habilidades = new ArrayList<String>();
 
-    public Pokemon(){}
-    public Pokemon(Long id, String foto, String type, String weight, List ability) {
+    public Pokemon() {}
+
+    public Pokemon(Long id, String foto, String tipo, String peso, List habilidades) {
 //        this.id = id;
         this.foto = foto;
-        this.type = type;
-        this.weight = weight;
-        this.ability = ability;
+        this.tipo = tipo;
+        this.peso = peso;
+        this.habilidades = habilidades;
     }
 
 //    public Long getId() {
@@ -35,27 +36,27 @@ public class Pokemon {
         this.foto = foto;
     }
 
-    public String getType() {
-        return type;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public String getWeight() {
-        return weight;
+    public String getPeso() {
+        return peso;
     }
 
-    public void setWeight(String weight) {
-        this.weight = weight;
+    public void setPeso(String peso) {
+        this.peso = peso;
     }
 
-    public List getAbility() {
-        return ability;
+    public List getHabilidades() {
+        return habilidades;
     }
 
-    public void setAbility(List ability) {
-        this.ability = ability;
+    public void setHabilidades(List habilidades) {
+        this.habilidades = habilidades;
     }
 }
