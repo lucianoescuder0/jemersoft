@@ -6,7 +6,7 @@ info:
     email: lucianoescudero98@gmail.com
   version: 1.0.0
 servers:
-  - url: http://localhost:8099/v1/pokedex
+  - url: https://jemersoft-fe74f6176a3b.herokuapp.com/v1/pokedex
 tags:
   - name: pokedex
 paths:
@@ -14,7 +14,7 @@ paths:
     get:
       tags:
         - pokedex
-      summary: Busca todos los pokemons listando de a 6, con el parametros opcional page para el paginado
+      summary: Lista pokemons con información básica, posee un parametro opcional para el paginado
       parameters:
         - name: page
           in: query
@@ -44,11 +44,11 @@ paths:
     get:
       tags:
         - pokedex
-      summary: Busca un pokemon es especifico por su nombre
+      summary: Búsqueda de pokemon a través de su nombre
       parameters:
         - name: name
           in: path
-          description: Muestra información de un pokemon en especifico
+          description: Nombre del pokemon a buscar
           required: true
           schema:
             type: string
